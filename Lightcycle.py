@@ -31,11 +31,11 @@ class Lightcycle:
 
 
     def handle_key_press(self, keys_pressed):
-        if keys_pressed[self.up_key]:
+        if keys_pressed[self.up_key] and self.direction != Direction.DOWN:
             self.direction = Direction.UP
-        if keys_pressed[self.down_key]:
+        if keys_pressed[self.down_key] and self.direction != Direction.UP:
             self.direction = Direction.DOWN
-        if keys_pressed[self.left_key]:
+        if keys_pressed[self.left_key] and self.direction != Direction.RIGHT:
             self.direction = Direction.LEFT
-        if keys_pressed[self.right_key]:
+        if keys_pressed[self.right_key] and self.direction != Direction.LEFT:
             self.direction = Direction.RIGHT
