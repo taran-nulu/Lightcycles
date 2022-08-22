@@ -7,7 +7,7 @@ width, height = 700, 700
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Tron Lightcycles")
 
-PADDING = 5
+PADDING = 10
 
 FPS = 20
 vel = 10
