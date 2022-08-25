@@ -37,10 +37,10 @@ class Lightcycle:
             self.x += self.VELOCITY
 
         status = LightcycleStatus.OK
-        if self.window.get_at((self.x, self.y)) != self.backgroundColor:
-            status = LightcycleStatus.COLLISION
-        elif self.x <= 0 or self.x >= self.window_width or self.y <= 0 or self.y >= self.window_height:
+        if self.x <= 0 or self.x >= self.window_width or self.y <= 0 or self.y >= self.window_height:
             status = LightcycleStatus.OUT_OF_BOUNDS
+        elif self.window.get_at((self.x, self.y)) != self.backgroundColor:
+            status = LightcycleStatus.COLLISION
 
         pygame.draw.rect(self.window, self.color, pygame.Rect(self.x, self.y, self.SIZE, self.SIZE))
 
