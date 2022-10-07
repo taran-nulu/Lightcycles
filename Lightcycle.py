@@ -13,14 +13,12 @@ class Lightcycle:
     SIZE = 10
     VELOCITY = 10
 
-    def __init__(self, window, backgroundColor, color, x, y, direction, up_key, down_key, left_key, right_key) -> None:
-        self.window = window
-        self.window_width, self.window_height = 700, 700 # window.get_size()
+    def __init__(self, arena, backgroundColor, color, x, y, direction, up_key, down_key, left_key, right_key) -> None:
+        self.arena = arena
+        self.arena_width, self.arena_height = arena.get_size()
         self.backgroundColor = backgroundColor
         self.color = color
-        self.x = x
-        self.y = y
-        self.direction = direction
+        self.setPosition(x, y, direction)
         self.up_key = up_key
         self.down_key = down_key
         self.left_key = left_key
@@ -37,12 +35,12 @@ class Lightcycle:
             self.x += self.VELOCITY
 
         status = LightcycleStatus.OK
-        if self.x <= 0 or self.x >= self.window_width or self.y <= 0 or self.y >= self.window_height:
+        if self.x <= 0 or self.x >= self.arena_width or self.y <= 0 or self.y >= self.arena_height:
             status = LightcycleStatus.OUT_OF_BOUNDS
-        elif self.window.get_at((self.x, self.y)) != self.backgroundColor:
+        elif self.arena.get_at((self.x, self.y)) != self.backgroundColor:
             status = LightcycleStatus.COLLISION
 
-        pygame.draw.rect(self.window, self.color, pygame.Rect(self.x, self.y, self.SIZE, self.SIZE))
+        pygame.draw.rect(self.arena, self.color, pygame.Rect(self.x, self.y, self.SIZE, self.SIZE))
 
         return status
 
@@ -55,3 +53,8 @@ class Lightcycle:
             self.direction = Direction.LEFT
         if keys_pressed[self.right_key] and self.direction != Direction.LEFT:
             self.direction = Direction.RIGHT
+
+    def setPosition(self, x, y, direction):
+        self.x = x
+        self.y = y
+        self.direction = direction
