@@ -41,7 +41,8 @@ def main():
     player1 = Lightcycle(arena, black, red, PADDING, PADDING, Direction.RIGHT, pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d)
     player2 = Lightcycle(arena, black, blue, width - Lightcycle.SIZE - PADDING, arena_height - Lightcycle.SIZE - PADDING, Direction.LEFT, pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT)
 
-    runGame(player1, player2)
+    while True:
+        runGame(player1, player2)
 
 def runGame(player1, player2):
     clock = pygame.time.Clock()
@@ -77,8 +78,6 @@ def runGame(player1, player2):
             run = False
 
         pygame.display.update()
-    
-    runGame(player1, player2)
 
 if __name__ == "__main__":
     main()
