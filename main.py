@@ -2,7 +2,7 @@ import pygame
 
 from Direction import *
 from Lightcycle import *
-from Scoreboard import *
+from Scorekeeper import *
 
 pygame.font.init()
 
@@ -26,31 +26,23 @@ white = (255, 255, 255)
 red = (255, 0, 0)
 blue = (0, 0, 255)
 
-winner_font = pygame.font.SysFont('comicsans', 30)
-
-def draw_winner(text):
-    draw_text = winner_font.render(text, 1, black)
-    scoreboard.blit(draw_text, (width/2 - draw_text.get_width()/2, scoreboard_height/2 - draw_text.get_height()/2))
-    pygame.display.update()
-    pygame.time.delay(3000)
-
 def main():
-    scoreboard.fill(white)
     arena.fill(black)
+
+    scorekeeper = Scorekeeper(scoreboard, white, "Red", red, "Blue", blue)
 
     player1 = Lightcycle(arena, black, red, PADDING, PADDING, Direction.RIGHT, pygame.K_w, pygame.K_s, pygame.K_a, pygame.K_d)
     player2 = Lightcycle(arena, black, blue, width - Lightcycle.SIZE - PADDING, arena_height - Lightcycle.SIZE - PADDING, Direction.LEFT, pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT)
 
     while True:
-        runGame(player1, player2)
+        runGame(scorekeeper, player1, player2)
 
-def runGame(player1, player2):
+def runGame(scorekeeper, player1, player2):
     clock = pygame.time.Clock()
     run = True
 
     player1.setPosition(PADDING, PADDING, Direction.RIGHT)
     player2.setPosition(width - Lightcycle.SIZE - PADDING, arena_height - Lightcycle.SIZE - PADDING, Direction.LEFT)
-    scoreboard.fill(white)
     arena.fill(black)
 
     while run:
@@ -68,13 +60,13 @@ def runGame(player1, player2):
         player2Status = player2.draw()
 
         if player1Status != LightcycleStatus.OK and player2Status != LightcycleStatus.OK:
-            draw_winner("It's a draw!")
-            run = False
-        elif player1Status != LightcycleStatus.OK:
-            draw_winner("Blue player wins!")
+            scorekeeper.updateWinner(0)
             run = False
         elif player2Status != LightcycleStatus.OK:
-            draw_winner("Red player wins!")
+            scorekeeper.updateWinner(1)
+            run = False
+        elif player1Status != LightcycleStatus.OK:
+            scorekeeper.updateWinner(2)
             run = False
 
         pygame.display.update()
