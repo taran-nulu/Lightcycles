@@ -19,7 +19,7 @@ class Scorekeeper:
         self.player1Score = 0
         self.player2Score = 0
 
-        self.surface.fill(self.surfaceColor)
+        self.renderScore()
 
     def updateWinner(self, playerNumber):
         if playerNumber == 0:
@@ -28,10 +28,18 @@ class Scorekeeper:
             self.player1Score += 1
             drawText = SCORE_FONT.render(f"{self.player1Name} Wins!", 1, self.player1Color)
         elif playerNumber == 2:
-            self.player2Score += 2
+            self.player2Score += 1
             drawText = SCORE_FONT.render(f"{self.player2Name} Wins!", 1, self.player2Color)
         self.surface.blit(drawText, (SCORE_WIDTH/2 - drawText.get_width()/2, SCORE_HEIGHT))
         pygame.display.update()
-        pygame.time.delay(3000)
+        pygame.time.delay(2000)
+        self.renderScore()
+
+    def renderScore(self):
         self.surface.fill(self.surfaceColor)
+        player1Text = SCORE_FONT.render(f"{self.player1Name}: {self.player1Score}", 1, self.player1Color)
+        player2Text = SCORE_FONT.render(f"{self.player2Name}: {self.player2Score}", 1, self.player2Color)        
+
+        self.surface.blit(player1Text, (5, SCORE_HEIGHT))
+        self.surface.blit(player2Text, (SCORE_WIDTH - player2Text.get_width() - 5, SCORE_HEIGHT))
         

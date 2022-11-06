@@ -61,12 +61,15 @@ def runGame(scorekeeper, player1, player2):
 
         if player1Status != LightcycleStatus.OK and player2Status != LightcycleStatus.OK:
             scorekeeper.updateWinner(0)
+            scorekeeper.renderScore()
             run = False
         elif player2Status != LightcycleStatus.OK:
             scorekeeper.updateWinner(1)
+            scorekeeper.renderScore()
             run = False
         elif player1Status != LightcycleStatus.OK:
             scorekeeper.updateWinner(2)
+            scorekeeper.renderScore()
             run = False
 
         pygame.display.update()
